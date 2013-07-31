@@ -1,0 +1,17 @@
+
+<% if att.type == 'Bookmark' %>
+	<img src="http://g.etfv.co/<%=att.url%>" alt="Google" width="16" height="16" /> <a href="<%=att.url%>"><%=att.name%></a>
+<% elsif att.type == 'Folder'  %>
+	<span class="label label-info folder-label"><%=att.name%>/</span> <a href="/api/folder/remove/<%=att.id%>" class="remove" data="<%=att.id%>">Remove</a>
+<% elsif att.type == 'Todo' %> 
+	<label class="checkbox">
+		<input type="checkbox"> <%=att.name%>
+	</label>
+<% elsif att.type == 'Note' %> 
+	<blockquote>
+	<%= att.body %>
+	<cite><%=att.name%></cite>
+	</blockquote>
+<% else %>
+	<%=att.name%>
+<%end%>
