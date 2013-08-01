@@ -50,26 +50,31 @@ function panel_init() {
                 lineNumbers: true,
                 mode: "bookmark",
               });
-       editor.on("cursorActivity", function(ed){
-        if (completed){
+
+        editor.on("cursorActivity", function(ed){
+        if (completed)
           completed = false;
-        }else
-          CodeMirror.showHint(ed, CodeMirror.bookmarkHint, {root: root, completeSingle: false}); 
+        else
+          if(CodeMirror.bookmarkHint_isPrevFolder(editor)){
+            setTimeout(function(){
+              CodeMirror.showHint(ed, CodeMirror.bookmarkHint, {root: folders, completeSingle: false}); 
+            }, 10);  
+          }else{
+              CodeMirror.showHint(ed, CodeMirror.bookmarkHint, {root: folders, completeSingle: false}); 
+          }
       });
 
       editor.on("endCompletion", function(ed){
         completed = true;
       });
       
-      editor.on("keyHandled", function(editor, event){
-        //console.log("keyHandled");
-      });
-      
+     
       $("body").keypress(function(event){
         if(event.which == 13 && event.ctrlKey){
             self.port.emit('panel.done', editor.getValue());
         }
       });
+
       editor.on("change", function(editor, event){
         //console.log("change");
         //if(event.which == 13 && event.ctrlKey){
