@@ -51,8 +51,9 @@ class Api
 		folder.delete
 	end
 	def add(data)
-		command = data
-
+		command = JSON.parse data
+		t = command['type']
+		puts "Type #{t}"
 		case command['type']
 		when 'todo'
 			node = self.add_todo command

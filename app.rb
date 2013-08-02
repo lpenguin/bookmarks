@@ -31,12 +31,13 @@ helpers do
 end
 
 post '/api/node/add/' do
+  puts params[:data]
 	api.add params[:data]
   return 'ok'
 end
 
 get '/api/folders/get/' do
-	return JSONP api.folders
+	return api.folders
 end
 
 get '/api/folder/remove/:id' do |id|

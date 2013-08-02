@@ -1,7 +1,7 @@
 // Quick and dirty spec file highlighting
 
 CodeMirror.defineMode("bookmark", function() {
-    var folder = /^(folder|f)/;
+    var folder = /^(folder)/;
     var keywords = /^(bookmark|note|todo)/;
     var variable = /^([_A-Za-z0-9\.]+)/;
     //var empty = /^\s*$/;

@@ -99,17 +99,16 @@
       var filter = editor.getLine(cur.line).substring(0, cur.ch);
       var res = filterArr(types, filter);
       return {
-        list: res,
+        list: types,
         from: Pos(cur.line, 0),
         to: Pos(cur.line, token.end)
       }; 
-    }else if(cur.line == 0){
+    }else if(cur.line == 1 && !token.type){
       var filter = editor.getLine(cur.line).substring(0, cur.ch);
-      var res = filterArr(types, filter);
       return {
-        list: res,
+        list: ['folder'],
         from: Pos(cur.line, 0),
-        to: Pos(cur.line, token.end)
+        to: Pos(cur.line, cur.ch)
       }; 
     }
     else{

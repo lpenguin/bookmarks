@@ -57,10 +57,10 @@ function panel_init() {
         else
           if(CodeMirror.bookmarkHint_isPrevFolder(editor)){
             setTimeout(function(){
-              CodeMirror.showHint(ed, CodeMirror.bookmarkHint, {root: folders, completeSingle: false}); 
+              CodeMirror.showHint(ed, CodeMirror.bookmarkHint, {root: root, completeSingle: false}); 
             }, 10);  
           }else{
-              CodeMirror.showHint(ed, CodeMirror.bookmarkHint, {root: folders, completeSingle: false}); 
+              CodeMirror.showHint(ed, CodeMirror.bookmarkHint, {root: root, completeSingle: false}); 
           }
       });
 

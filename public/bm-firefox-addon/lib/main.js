@@ -12,7 +12,7 @@ var parser = require("./parser").Parser({
 
 var api = require("./api").api;
 
-var panel = require("sdk/panel").Panel({
+var panel = require("./mypanel").Panel({
   width: 500,
   height: 400,
   contentURL: data.url("panel.html"),

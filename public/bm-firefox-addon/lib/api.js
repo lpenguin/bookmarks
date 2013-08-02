@@ -12,8 +12,12 @@ function apiCall(method, data, callback){
   var url = api_url + '/' + method.replace('.', '/')+'/';
   console.log("sendind url "+ url);
   var content = undefined;
-  if(data)
-    content = { data: JSON.stringify(data) }
+  if(data){
+    content = { data: data };
+    console.log('content.data: '+content.data);
+
+  }
+    
   
   var request = Request({
       url: url,
