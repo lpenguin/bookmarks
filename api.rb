@@ -50,6 +50,7 @@ class Api
 		folder = Folder.find id
 		folder.delete
 	end
+
 	def add(data)
 		command = JSON.parse data
 		t = command['type']
@@ -63,10 +64,14 @@ class Api
 			node = self.add_note command
 		end
 
-		if command['folder'] != nil
-			folder = FolderHelper.get_folder_by_path command['folder']
-			folder.attachments << node
-			folder.save
+
+		if command['folders'] != nil
+			command['folders'].each do |name|
+				folder = FolderHelper.get_folder_by_path name
+				folder.attachments << node
+				folder.save				
+			end
+			
 		end
 		command['type']
 	end
