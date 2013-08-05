@@ -1,5 +1,5 @@
 .sublime*
 .sftp-config.json
 *.log
-log/*
-log\*
+log/*.log
+log\*.log
