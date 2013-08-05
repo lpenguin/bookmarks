@@ -51,6 +51,14 @@ class Api
 		folder.delete
 	end
 
+	def get_tag(name)
+		tag = Tag.first :name => name
+		if tag == nil
+			tag = Tag.new :name => name
+		end
+		tag
+	end
+
 	def add(data)
 		command = JSON.parse data
 		t = command['type']
@@ -64,6 +72,14 @@ class Api
 			node = self.add_note command
 		end
 
+
+		if command['tags'] != nil
+			tags = command['tags']
+			tags.each do |name|
+				tag = self.get_tag name
+				node.tags << tag
+			end
+		end
 
 		if command['folders'] != nil
 			command['folders'].each do |name|
