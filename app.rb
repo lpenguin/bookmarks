@@ -10,9 +10,6 @@ require './models'
 require './views'
 require './api'
 
-api = Api.new
-view = View.new
-
 configure do
     set :bind => '188.40.18.175'
 end
@@ -32,19 +29,19 @@ end
 
 post '/api/node/add/' do
   puts params[:data]
-	api.add params[:data]
+	Api.add params[:data]
   return 'ok'
 end
 
 get '/api/folders/get/' do
-	return api.folders
+	return Api.folders
 end
 
 get '/api/folder/remove/:id' do |id|
-	api.remove_folder id
+	Api.remove_folder id
 	redirect '/'
 end
 
 get '/' do
-	erb :index , :locals => view.index
+	erb :index , :locals => View.index
 end

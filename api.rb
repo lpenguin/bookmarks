@@ -1,3 +1,4 @@
+# encoding: utf-8
 require './models'
 require './folder_helper'
 
@@ -5,13 +6,13 @@ require 'dm-serializer'
 require 'json'
 
 class Api
-	def add_todo(command)
+	def self.add_todo(command)
 		Todo.create(
 			:name => command['text']
 			)
 	end
 
-	def add_bookmark(command)
+	def self.add_bookmark(command)
 		Bookmark.create(
 			:name => command['title'],
 			:url => command['url'],
@@ -20,7 +21,7 @@ class Api
 
 	end
 
-	def add_note(command)
+	def self.add_note(command)
 		puts command['text']
 		Note.create(
 			:name => command['name'],
@@ -28,30 +29,35 @@ class Api
 			)
 	end
 
-	def folders()
-		JSON.pretty_generate folders_rec FolderHelper.get_root_folder
+	def self.folders()
+		JSON.pretty_generate node_rec FolderHelper.get_root_folder, only_folders: true
 	end
 
-	def folders_rec(folder)
+
+	def self.nodes()
+		JSON.pretty_generate node_rec FolderHelper.get_root_folder
+	end
+
+	def self.node_rec(node, only_folders=false)
 		children = []
-		folder.attachments.each do |att|
-			if att['type'] == 'Folder'
-				children.push folders_rec(att)
+		node.attachments.each do |att|
+			if (att['type'] == 'Folder' and only_folders) or not only_folders
+				children.push node_rec(att, only_folders)
 			end
 		end
 		res = {
-			:name => folder['name'],
+			:name => node['name'],
 			:children => children
 		}
-		return res
+		return res		
 	end
 
-	def remove_folder(id)
+	def self.remove_folder(id)
 		folder = Folder.find id
 		folder.delete
 	end
 
-	def get_tag(name)
+	def self.get_tag(name)
 		tag = Tag.first :name => name
 		if tag == nil
 			tag = Tag.new :name => name
@@ -59,7 +65,7 @@ class Api
 		tag
 	end
 
-	def add(data)
+	def self.add(data)
 		command = JSON.parse data
 		t = command['type']
 		puts "Type #{t}"
