@@ -45,3 +45,8 @@ end
 get '/' do
 	erb :index , :locals => View.index
 end
+
+get '/folder/:id' do |id|
+  erb :index, :locals => View.folder(id)
+end
+

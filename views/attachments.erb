@@ -1,11 +1,10 @@
 <ul style="list-style-type:none">
 	<%for att in attachments%>
-		<li <%if att.type == 'Folder' %> class="folder" <%end%> >
+		<li <%if att.type == 'Folder' %> class="folder" <%end%> data-id="<%= att.id %>">
 			<%= erb :attachment, :locals => {:att => att} %>
 			<%if att.type == 'Folder' %>
 				<%= erb :attachments, :locals => {:attachments => att.attachments} %>
 			<%end%>
 		</li>
-
 	<%end%>
 </ul>

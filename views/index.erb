@@ -13,6 +13,7 @@
 		}
 		li.folder  > span{
 			/*display: none;*/
+			/*cursor: pointer;*/
 		}
 
 		li.folder > span {
@@ -34,19 +35,44 @@
 		    width: 100%;
 		    padding: 5px;
 		}
-
+		li.folder > span > a {
+			color: black;
+		}
 		li.folder > span {
 			background-color: #eee;
 		}
+		html, body {
+		    height: 100%;
+		}
+
+		li {
+			padding-left: 15px;
+		}
+		html {
+		    display: table;
+		    margin: auto;
+		}
+
+		body {
+
+		    display: table-cell;
+		    vertical-align: middle;
+		}    
+
+		h3 {
+			text-align: center
+		}
+
+
 	</style>
 	<script type="text/javascript" src="/js/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/underscore.js"></script>
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/jquery-bootstrap-tree.js"></script>
 	<script type="text/javascript">
-
+		var width = 500;
 		function setPadding($ul, level){
-			$ul.children('li').children('span').css('padding-left', 15 * (level) + 'px');
+			$ul.children('li').children('span').css('width', (width-15 * (level)) + 'px');
 			var childUls = $ul.children('li').children('ul');
 			for(var i = 0; i  < childUls.length; i++){
 				var childUl = $(childUls[i]);
@@ -62,8 +88,9 @@
 		var data = [];
 		$(function(){
 			$('#root').children('ul').each(function(i, ul){
-				setPadding($(ul), 0);
+				setPadding($(ul), 1);
 			})
+
 			//$("#root").find(".folder > *").show();
 			// $(".folder-label").click(function(){
 			// 	$(this).siblings().toggle(400);
