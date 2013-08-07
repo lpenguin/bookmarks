@@ -5,6 +5,22 @@
      <link rel="stylesheet" href="codemirror/lib/codemirror.css">
      <link rel="stylesheet" href="codemirror/addon/hint/show-hint.css">
      <link rel="stylesheet" href="bootstrap.min.css" />
+  <style type="text/css">
+    #error {
+      display: none;
+      width: 200px;
+      height: 50px;
+      background-color: gray;
+      border-style: solid;
+      border-width: 1px;
+      border-color: gray;
+      border-radius: 7px;
+      position: absolute;
+      top: 70px;
+      left: 70px;
+      padding: 10px;
+    }
+  </style>
 </head>
  
 <body>
@@ -17,6 +33,8 @@
     <span class="status label label-important" id="command_error" ></span>
   </p>
   <textarea rows="8" cols="30" id="command"></textarea>
+  <div id="error">
+  </div> 
 </body>
  
 </html>

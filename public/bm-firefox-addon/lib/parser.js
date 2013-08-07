@@ -56,9 +56,6 @@ var parserClass = function(params){
     }
     
     this.validate = function(command){
-        //if(!command.type){
-        //    command.type = "note";
-    //    }
         if(command.type == 'todo'){
             if(!command.text){
                 command.error = 'todo without text';

@@ -26,7 +26,10 @@ var panel = require("./mypanel").Panel({
       ],
 });
 
-
+var errorCallback = function(response){
+  panel.port.emit('panel.error_response', response);
+  panel.show();
+};
 
 
 
@@ -34,16 +37,22 @@ var panel = require("./mypanel").Panel({
 panel.on("show", function() { 
   api.getFolders(function(root){
   	panel.port.emit('panel.set.root', root);
-  });
+  }, errorCallback);
   panel.port.emit("panel.show", {title: tabs.activeTab.title});
 });
 
+
+panel.port.on('panel.hide', function(){
+  panel.hide();
+});
 panel.port.on('panel.done', function(command){
     var command = parser.parse(command)
     if(command.error){
         return;
     }
-    api.sendNode(command);
+    api.sendNode(command, function(response){
+      // panel.hide();
+    },  errorCallback);
     panel.hide();
 });
 

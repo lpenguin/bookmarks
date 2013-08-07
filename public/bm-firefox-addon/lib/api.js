@@ -3,11 +3,11 @@ var Request = require("sdk/request").Request;
 var api_url = "http://lilacpenguin.me:4567/api";
 
 
-function apiCall(method, data, callback){
-  if(callback == undefined){
-    callback = data;
-    data = undefined;
-  }
+function apiCall(method, data, callback, errorCallback){
+  // if(callback == undefined){
+  //   callback = data;
+  //   data = undefined;
+  // }
 
   var url = api_url + '/' + method.replace('.', '/')+'/';
   console.log("sendind url "+ url);
@@ -19,10 +19,15 @@ function apiCall(method, data, callback){
   }
     
   
+  console.log('errorCallback: '+errorCallback)
   var request = Request({
       url: url,
       content: content,
       onComplete: function (response) {
+        console.log("Got response, status: "+response.status)
+        if(response.status != 200){
+          return errorCallback(response);
+        }
         if(callback)
           callback(response);
       }
@@ -34,19 +39,19 @@ function apiCall(method, data, callback){
     request.get();
 }
 
-function getFolders(callback){
-    apiCall('folders.get', function(response){
+function getFolders(callback, errorCallback){
+    apiCall('folders.get', null, function(response){
       if(callback)
         callback(response.json);
-    });
+    }, errorCallback);
 }
 
-function sendNode(node, callback){
+function sendNode(node, callback, errorCallback){
     var data = JSON.stringify(node);
     apiCall('node.add', data, function(response){
       if(callback)
         callback();
-    });
+    }, errorCallback);
 }
 
 
@@ -54,4 +59,5 @@ exports.api = {
   sendNode: sendNode,
   getFolders: getFolders,
   apiCall: apiCall
+
 };
