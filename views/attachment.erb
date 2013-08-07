@@ -1,8 +1,9 @@
 
+<span>
 <% if att.type == 'Bookmark' %>
-	<img src="http://g.etfv.co/<%=att.url%>" alt="Google" width="16" height="16" /> <a href="<%=att.url%>"><%=att.name%></a>
+	 <img src="http://g.etfv.co/<%=att.url%>" alt="Google" width="16" height="16" /> <a href="<%=att.url%>"><%=att.name%></a> 
 <% elsif att.type == 'Folder'  %>
-	<span class="label label-info folder-label"><%=att.name%>/</span> <a href="/api/folder/remove/<%=att.id%>" class="remove" data="<%=att.id%>">Remove</a>
+	 <%=att.name%>/
 <% elsif att.type == 'Todo' %> 
 	<label class="checkbox">
 		<input type="checkbox"> <%=att.name%>
@@ -15,3 +16,4 @@
 <% else %>
 	<%=att.name%>
 <%end%>
+</span>

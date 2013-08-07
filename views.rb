@@ -7,6 +7,6 @@ require './api'
 
 class View
 	def self.index()
-		{ node_data: Api.nodes }
+		{ :root_folders => FolderHelper.get_root_folder.attachments }
 	end
 end

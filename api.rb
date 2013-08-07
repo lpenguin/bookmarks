@@ -35,7 +35,7 @@ class Api
 
 
 	def self.nodes()
-		JSON.pretty_generate node_rec FolderHelper.get_root_folder
+		self.node_rec_str FolderHelper.get_root_folder
 	end
 
 	def self.node_rec(node, only_folders=false)
@@ -52,15 +52,30 @@ class Api
 		return res		
 	end
 
+	def self.node_rec_str(node, only_folders=false)
+		children = []
+		node.attachments.each do |att|
+			if (att['type'] == 'Folder' and only_folders) or not only_folders
+				children.push node_rec_str(att, only_folders)
+			end
+		end
+		name = node['name'].gsub("'", "\\'").gsub("\n", "\\n")
+		children = children.join ', '
+		res = "{ 'key': '#{name}', 'values': [#{children}] }"
+		return res		
+	end
+
 	def self.remove_folder(id)
 		folder = Folder.find id
 		folder.delete
 	end
 
-	def self.get_tag(name)
-		tag = Tag.first :name => name
+	def self.get_tag(name) 
+		tag = Tag.find_by :name => name
 		if tag == nil
-			tag = Tag.new :name => name
+			tag = Tag.create :name => name
+		else
+			tag = tag.first
 		end
 		tag
 	end

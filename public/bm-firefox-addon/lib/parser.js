@@ -8,21 +8,30 @@ function merge(obj1, obj2){
     return obj1;
 }
 
+
 var parserClass = function(params){
     this.url = params.url;
     this.title = params.title;
     
+    var folderRe = /(folder)\s*/;
+    var todoRe = /(todo)/;
+    var bookmarkRe = /(bookmark)/;
+    var noteRe = /(note)\s*/;
+    var tagRe = /(tag)\s*/;
+
     this.parseLine = function(line, command){
-        if(line.match(/(bookmark)/)){
+        if(line.match(bookmarkRe)){
             command.type = 'bookmark';
-        }else if(line.match(/(todo)/)){
+        }else if(line.match(todoRe)){
             command.type = 'todo';
-            command.text += line.replace(/(todo)/, '');
-        }else if(line.match(/(folder)/)){
-            command.folder = line.replace(/(folder)\s*/, '');
-        }else if(line.match(/(note)/)){
+            command.text += line.replace(todoRe, '');
+        }else if(line.match(folderRe)){
+            command.folders.push(line.replace(folderRe, ''));
+        }else if(line.match(tagRe)){
+            command.tags.push(line.replace(tagRe, ''));
+        }else if(line.match(noteRe)){
             command.type = 'note';
-            command.name = line.replace(/(note)\s*/, '');
+            command.name = line.replace(noteRe, '');
         }else{
             command.text += line + "\n";
         }
@@ -32,7 +41,9 @@ var parserClass = function(params){
         var command = {
             url: this.url(),
             title: this.title(),
-            text: ""
+            text: "",
+            folders: [],
+            tags: []
         }
         var lines = text.split('\n');
         for(var i in lines){

@@ -1,69 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Geek Bookmarks</title>
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
 	<style type="text/css">
-		.folder > ul {
-			display: none;
-		}
-
-		.folder-label {
-			cursor: pointer;
-		}
-		blockquote {
-			font-family: Georgia, serif;
-			font-size: 18px;
-			font-style: italic;
+		#root {
 			width: 500px;
-			margin: 0.25em 0;
-			padding: 0.35em 40px;
-			line-height: 1.45;
-			position: relative;
-			color: #383838;
 		}
 
-		blockquote:before {
-			display: block;
-			padding-left: 10px;
-			content: "\201C";
-			font-size: 80px;
-			position: absolute;
-			left: -20px;
-			top: -20px;
-			color: #7a7a7a;
+		li.folder {
+			/*display: none;*/
 		}
-
-		blockquote cite {
-			color: #999999;
-			font-size: 14px;
-			display: block;
-			margin-top: 5px;
-		}
-		 
-		blockquote cite:before {
-			content: "\2014 \2009";
-		}
-		
-		.remove {
-			font-size: 8pt;
+		li.folder  > span{
 			/*display: none;*/
 		}
 
-	</style>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-	<script type="text/javascript">
-		$(function(){
-			//$("#root").find(".folder > *").show();
-			$(".folder-label").click(function(){
-				$(this).siblings().toggle(400);
-			});
+		li.folder > span {
+			font-weight: bold;
+		}
 
-			$(".remove").click(function(){
-				return confirm("Are you shure?");
-			});
+		ul  {
+			/*padding: 0px;*/
+			margin: 0px;
+		}
+
+		span {
+			border-color: #ddd;
+					    
+		    border-width: 1px 1px 0 1px;
+		    border-style: solid;
+
+		    display: inline-block;
+		    width: 100%;
+		    padding: 5px;
+		}
+
+		li.folder > span {
+			background-color: #eee;
+		}
+	</style>
+	<script type="text/javascript" src="/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/underscore.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-bootstrap-tree.js"></script>
+	<script type="text/javascript">
+
+		function setPadding($ul, level){
+			$ul.children('li').children('span').css('padding-left', 15 * (level) + 'px');
+			var childUls = $ul.children('li').children('ul');
+			for(var i = 0; i  < childUls.length; i++){
+				var childUl = $(childUls[i]);
+				setPadding(childUl, level + 1);
+			}
+			// (function(level){
+			// 	$ul.find('li').children('ul').each(function(i, ul){
+			// 		setPadding($(ul), level + 1);
+			// 	});	
+			// })(level);
+			
+		}
+		var data = [];
+		$(function(){
+			$('#root').children('ul').each(function(i, ul){
+				setPadding($(ul), 0);
+			})
+			//$("#root").find(".folder > *").show();
+			// $(".folder-label").click(function(){
+			// 	$(this).siblings().toggle(400);
+			// });
+
+			// $(".remove").click(function(){
+			// 	return confirm("Are you shure?");
+			// });
 			// $(".folder-label").hover(function(){
 			// 	$(this).siblings().filter(".remove").toggle();
 			// })
+
+			
 		});
 
 
@@ -71,8 +84,9 @@
 </head>
 <body>
 	<h3>Folders</h3>
-	<div id="root">
-		<%= node_data %>
+	<div id="root" class="list-tree folder">
+		<!-- <div class="list-tree"></div> -->
+		<%= erb :attachments, :locals => {:attachments => root_folders} %>
 	</div>
 </body>
 </html>
