@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Geek Bookmarks</title>
+	<title>Geek Bookmarks<% if selected_folder %>: <%=selected_folder.name%><% end %></title>
+	
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
 	<style type="text/css">
 		#root {
@@ -30,7 +31,7 @@
 					    
 		    border-width: 1px 1px 0 1px;
 		    border-style: solid;
-
+		    border-radius: 5px;
 		    display: inline-block;
 		    width: 100%;
 		    padding: 5px;
@@ -40,6 +41,7 @@
 		}
 		li.folder > span {
 			background-color: #eee;
+			cursor: pointer;
 		}
 		html, body {
 		    height: 100%;
@@ -56,13 +58,20 @@
 		body {
 
 		    display: table-cell;
-		    vertical-align: middle;
+		    /*vertical-align: middle;*/
 		}    
 
 		h3 {
 			text-align: center;
 		}
 
+		li {
+			display: none;
+		}
+
+		#root > ul > li {
+			display: block;
+		}
 
 	</style>
 	<script type="text/javascript" src="/js/jquery.min.js"></script>
@@ -91,6 +100,11 @@
 				setPadding($(ul), 1);
 			})
 
+			$('li.folder').click(function(){
+				$(this).children('ul').children().toggle(300);
+				return false;
+			});
+
 			//$("#root").find(".folder > *").show();
 			// $(".folder-label").click(function(){
 			// 	$(this).siblings().toggle(400);
@@ -110,7 +124,11 @@
 	</script>
 </head>
 <body>
-	<h3>Folders</h3>
+	<% if selected_folder %>
+		<h3><%=selected_folder.name%></h3>
+	<% else %>
+		<h3>Folders</h3>
+	<% end %>
 	<div id="root" class="list-tree folder">
 		<!-- <div class="list-tree"></div> -->
 		<%= erb :attachments, :locals => {:attachments => root_folders} %>
