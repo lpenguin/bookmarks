@@ -80,6 +80,33 @@ class Api
 		tag
 	end
 
+	def self.folder_content(id)
+		folder = Folder.find id
+		
+		bookmarks = []
+		notes = []
+		todos = []
+
+		folder.attachments.each do |attachment|
+			case attachment['type']
+			when 'Bookmark'
+				bookmarks.push attachment.as_json
+			when 'Note'
+				notes.push attachment.as_json
+			when 'Todo'
+				todos.push attachment.as_json
+			end
+		end
+		content = {
+			:bookmarks => bookmarks,
+			:notes => notes,
+			:todos => todos
+		}
+
+		return JSON.pretty_generate content
+
+	end
+
 	def self.add(data)
 		command = JSON.parse data
 		t = command['type']

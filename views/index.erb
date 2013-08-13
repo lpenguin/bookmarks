@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
 	<style type="text/css">
 		#root {
-			width: 500px;
+			width: 200px;
 		}
 
 		li.folder {
@@ -50,7 +50,7 @@
 		li {
 			padding-left: 15px;
 		}
-		html {
+		/*html {
 		    display: table;
 		    margin: auto;
 		}
@@ -59,7 +59,7 @@
 
 		    display: table-cell;
 		    /*vertical-align: middle;*/
-		}    
+		}    */
 
 		h3 {
 			text-align: center;
@@ -79,7 +79,7 @@
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/jquery-bootstrap-tree.js"></script>
 	<script type="text/javascript">
-		var width = 500;
+		var width = 200;
 		function setPadding($ul, level){
 			$ul.children('li').children('span').css('width', (width-15 * (level)) + 'px');
 			var childUls = $ul.children('li').children('ul');
@@ -94,6 +94,11 @@
 			// })(level);
 			
 		}
+
+		function loadFolderContents(folderId){
+
+		}
+		
 		var data = [];
 		$(function(){
 			$('#root').children('ul').each(function(i, ul){
@@ -102,6 +107,8 @@
 
 			$('li.folder').click(function(){
 				$(this).children('ul').children().toggle(300);
+				var id = $(this).attr('data-id');
+				loadFolderContents(id);
 				return false;
 			});
 
@@ -124,14 +131,26 @@
 	</script>
 </head>
 <body>
-	<% if selected_folder %>
-		<h3><%=selected_folder.name%></h3>
-	<% else %>
-		<h3>Folders</h3>
-	<% end %>
-	<div id="root" class="list-tree folder">
-		<!-- <div class="list-tree"></div> -->
-		<%= erb :attachments, :locals => {:attachments => root_folders} %>
+	<div class="row">
+		<div class="span3">
+			<% if selected_folder %>
+				<h3><%=selected_folder.name%></h3>
+			<% else %>
+				<h3>Folders</h3>
+			<% end %>
+			<div id="root" class="list-tree folder">
+				<!-- <div class="list-tree"></div> -->
+				<%= erb :folders, :locals => {:attachments => root_folders} %>
+			</div>
+		</div>
+		<div class="span3">
+			<h3>Bookmarks<h3>
+
+		</div>
+		<div class="span3">
+			<h3>Notes<h3>
+			
+		</div>
 	</div>
 </body>
 </html>

@@ -42,6 +42,10 @@ get '/api/folder/remove/:id' do |id|
 	redirect '/'
 end
 
+get '/api/folder/content/:id' do |id|
+  Api.folder_content id
+end
+
 get '/' do
 	erb :index , :locals => View.index
 end

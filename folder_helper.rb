@@ -53,4 +53,18 @@ class FolderHelper
 		end
 		return root
 	end
+
+	def self.folder_filter(node)
+		children = []
+		node.attachments.each do |att|
+			if att['type'] == 'Folder'
+				children.push node_rec(att, only_folders)
+			end
+		end
+		res = {
+			:name => node['name'],
+			:children => children
+		}
+		return res		
+	end
 end
