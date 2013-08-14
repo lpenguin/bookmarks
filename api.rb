@@ -90,11 +90,11 @@ class Api
 		folder.attachments.each do |attachment|
 			case attachment['type']
 			when 'Bookmark'
-				bookmarks.push attachment.as_json
+				bookmarks.push attachment
 			when 'Note'
-				notes.push attachment.as_json
+				notes.push attachment
 			when 'Todo'
-				todos.push attachment.as_json
+				todos.push attachment
 			end
 		end
 		content = {
@@ -103,7 +103,7 @@ class Api
 			:todos => todos
 		}
 
-		return JSON.pretty_generate content
+		return content.to_json
 
 	end
 

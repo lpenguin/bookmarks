@@ -1,7 +1,9 @@
 #require "./api.rb"
 require './models'
 require './folder_helper'
+require './api'
 
+puts Api.folder_content 54
 #Node.all.each do |n|
 #	puts "#{n.name} #{n.type}"
 #	if n.type == 'Bookmark'
@@ -9,10 +11,7 @@ require './folder_helper'
 #	end
 #end
 
-root_folders = FolderHelper.get_root_folder.attachments
-root_folders.each do |r|
-	puts r.name
-end
+#puts FolderHelper.get_root_folder.to_json 
 
 # puts "root #{root}"
 # root.attachments.each do |a|

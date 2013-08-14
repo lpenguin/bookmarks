@@ -94,11 +94,14 @@
 			// })(level);
 			
 		}
+		var apiRoot = "http://lilacpenguin.me:4567/api/";
 
 		function loadFolderContents(folderId){
-
+			$.getJSON(apiRoot+'folder/content/'+folderId, function(data){
+				alert(data.bookmarks.length)
+			});
 		}
-		
+
 		var data = [];
 		$(function(){
 			$('#root').children('ul').each(function(i, ul){
