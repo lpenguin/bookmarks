@@ -1,6 +1,9 @@
-adapter: mysql
+# encoding: utf-8
+
+adapter: mysql2
 database: bookmarks
 host: localhost
-user: root
+username: root
 password: root123
 pool: 8
+encoding: utf8

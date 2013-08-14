@@ -1,10 +1,10 @@
 <ul style="list-style-type:none">
 	<%for att in attachments.sort { |x,y| - (x['type'] <=> y['type']) }%>
 		<%if att.type == 'Folder' %>
-			<li  class="folder" data-id="<%= att.id %>">
+			<li  class="folder" data-id="<%= att.id %>" data-path="<%= path %>.<%= att.name %>">
 				<%= erb :attachment, :locals => {:att => att} %>
 				<%if att.type == 'Folder' %>
-					<%= erb :folders, :locals => {:attachments => att.attachments} %>
+					<%= erb :folders, :locals => {:attachments => att.attachments, :path => path+'.'+att.name} %>
 				<%end%>
 			</li>
 		<%end%>

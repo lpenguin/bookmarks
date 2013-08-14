@@ -1,9 +1,17 @@
+# encoding: utf-8
+
 #require "./api.rb"
 require './models'
 require './folder_helper'
 require './api'
-
-puts Api.folder_content 54
+require 'active_record'
+res =  Api.folder_content 165
+bookmark = Bookmark.find 164
+puts bookmark['name']
+puts bookmark.as_json.to_json
+# puts res.encode("UTF-8")
+# puts res.encoding.name
+# puts ActiveRecord::Base.connection.client_encoding() 
 #Node.all.each do |n|
 #	puts "#{n.name} #{n.type}"
 #	if n.type == 'Bookmark'

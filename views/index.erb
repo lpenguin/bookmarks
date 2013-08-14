@@ -9,24 +9,24 @@
 			width: 200px;
 		}
 
-		li.folder {
+		.list-tree  li.folder {
 			/*display: none;*/
 		}
-		li.folder  > span{
+		.list-tree  li.folder  > span{
 			/*display: none;*/
 			/*cursor: pointer;*/
 		}
 
-		li.folder > span {
+		.list-tree  li.folder > span {
 			font-weight: bold;
 		}
 
-		ul  {
+		.list-tree  ul  {
 			/*padding: 0px;*/
 			margin: 0px;
 		}
 
-		span {
+		.list-tree span {
 			border-color: #ddd;
 					    
 		    border-width: 1px 1px 0 1px;
@@ -36,10 +36,10 @@
 		    width: 100%;
 		    padding: 5px;
 		}
-		li.folder > span > a {
+		.list-tree li.folder > span > a {
 			color: black;
 		}
-		li.folder > span {
+		.list-tree li.folder > span {
 			background-color: #eee;
 			cursor: pointer;
 		}
@@ -47,7 +47,7 @@
 		    height: 100%;
 		}
 
-		li {
+		.list-tree li {
 			padding-left: 15px;
 		}
 		/*html {
@@ -65,21 +65,23 @@
 			text-align: center;
 		}
 
-		li {
+		.list-tree li {
 			display: none;
 		}
 
-		#root > ul > li {
+		.list-tree   ul > li {
 			display: block;
 		}
 
 	</style>
 	<script type="text/javascript" src="/js/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/underscore.js"></script>
+	<script type="text/javascript" src="/js/sprintf.js"></script>
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/jquery-bootstrap-tree.js"></script>
 	<script type="text/javascript">
 		var width = 200;
+		var selectedFolderId = -1;
 		function setPadding($ul, level){
 			$ul.children('li').children('span').css('width', (width-15 * (level)) + 'px');
 			var childUls = $ul.children('li').children('ul');
@@ -97,11 +99,26 @@
 		var apiRoot = "http://lilacpenguin.me:4567/api/";
 
 		function loadFolderContents(folderId){
+			selectedFolderId = folderId;
 			$.getJSON(apiRoot+'folder/content/'+folderId, function(data){
-				alert(data.bookmarks.length)
+				if(data.folder.id != selectedFolderId)
+					return;
+				
+				var bookmarksRoot = $("#bookmarks");
+				bookmarksRoot.empty();
+				_.each(data.bookmarks, function(bookmark){
+					console.log(bookmark);
+					bookmarksRoot.append(sprintf("<li><a href='%(url)s'>%(name)s</a></li>", bookmark));
+				})
 			});
 		}
 
+		function selectFolder(folder){
+			$('.folder').children('span').css('background-color', '#eee');
+			folder.children('span').css('background-color', '#ddd');
+			$("#path").text(folder.attr('data-path'));
+
+		}
 		var data = [];
 		$(function(){
 			$('#root').children('ul').each(function(i, ul){
@@ -109,7 +126,8 @@
 			})
 
 			$('li.folder').click(function(){
-				$(this).children('ul').children().toggle(300);
+				// $(this).children('ul').children().toggle(300);
+				selectFolder($(this));
 				var id = $(this).attr('data-id');
 				loadFolderContents(id);
 				return false;
@@ -134,24 +152,27 @@
 	</script>
 </head>
 <body>
+
 	<div class="row">
-		<div class="span3">
+		<div class="span4">
 			<% if selected_folder %>
 				<h3><%=selected_folder.name%></h3>
 			<% else %>
-				<h3>Folders</h3>
+							<h3 id="path">root</h3>
 			<% end %>
 			<div id="root" class="list-tree folder">
 				<!-- <div class="list-tree"></div> -->
-				<%= erb :folders, :locals => {:attachments => root_folders} %>
+				<%= erb :folders, :locals => {:attachments => root_folders, :path => 'root'} %>
 			</div>
 		</div>
-		<div class="span3">
-			<h3>Bookmarks<h3>
+		<div class="span5">
 
+			<h3>Bookmarks</h3>
+			<ul id="bookmarks"></ul>
 		</div>
-		<div class="span3">
-			<h3>Notes<h3>
+		<div class="span5">
+			<h3>Notes</h3>
+			<ul id="notes" ></ul>
 			
 		</div>
 	</div>

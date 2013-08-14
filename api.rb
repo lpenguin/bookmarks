@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 require './models'
 require './folder_helper'
 
@@ -100,7 +101,8 @@ class Api
 		content = {
 			:bookmarks => bookmarks,
 			:notes => notes,
-			:todos => todos
+			:todos => todos,
+			:folder => folder
 		}
 
 		return content.to_json

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'sinatra'
 require "sinatra/jsonp"
 
@@ -9,6 +11,10 @@ require 'uri'
 require './models'
 require './views'
 require './api'
+
+before do
+  content_type :html, 'charset' => 'utf-8'
+end
 
 configure do
     set :bind => '188.40.18.175'
@@ -52,5 +58,10 @@ end
 
 get '/folder/:id' do |id|
   erb :index, :locals => View.folder(id)
+end
+
+get '/test' do 
+  bookmark = Bookmark.find 164
+  return bookmark['name']
 end
 
