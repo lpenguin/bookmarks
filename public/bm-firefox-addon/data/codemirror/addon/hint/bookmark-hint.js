@@ -99,7 +99,7 @@
       var filter = editor.getLine(cur.line).substring(0, cur.ch);
       var res = filterArr(types, filter);
       return {
-        list: types,
+        list: res,
         from: Pos(cur.line, 0),
         to: Pos(cur.line, token.end)
       }; 

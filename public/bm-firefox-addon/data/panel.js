@@ -59,6 +59,7 @@ function panel_init() {
         editor = CodeMirror.fromTextArea(document.getElementById("command"), {
                 lineNumbers: true,
                 mode: "bookmark",
+                lineWrapping: true
               });
 
         editor.on("cursorActivity", function(ed){

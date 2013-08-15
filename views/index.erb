@@ -109,6 +109,20 @@
 				_.each(data.bookmarks, function(bookmark){
 					console.log(bookmark);
 					bookmarksRoot.append(sprintf("<li><a href='%(url)s'>%(name)s</a></li>", bookmark));
+				});
+
+				var notesRoot = $("#notes");
+				notesRoot.empty();
+				_.each(data.notes, function(note){
+					console.log(note);
+					notesRoot.append(sprintf("<li>%(body)s</li>", note));
+				});
+
+				var todosRoot = $("#todos");
+				todosRoot.empty();
+				_.each(data.todos, function(todo){
+					console.log(todo);
+					todosRoot.append(sprintf("<li> <input type=\"checkbox\">%(name)s</li>", todo));
 				})
 			});
 		}
@@ -154,7 +168,7 @@
 <body>
 
 	<div class="row">
-		<div class="span4">
+		<div class="span3">
 			<% if selected_folder %>
 				<h3><%=selected_folder.name%></h3>
 			<% else %>
@@ -165,15 +179,18 @@
 				<%= erb :folders, :locals => {:attachments => root_folders, :path => 'root'} %>
 			</div>
 		</div>
-		<div class="span5">
+		<div class="span4">
 
 			<h3>Bookmarks</h3>
 			<ul id="bookmarks"></ul>
 		</div>
-		<div class="span5">
+		<div class="span3">
 			<h3>Notes</h3>
 			<ul id="notes" ></ul>
-			
+		</div>
+		<div class="span3">
+			<h3>Todos</h3>
+			<ul id="todos" ></ul>
 		</div>
 	</div>
 </body>
