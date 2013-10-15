@@ -7,4 +7,5 @@ gem "rake", "~> 10.0.4"
 gem "activerecord", "~> 3.2.0"
 gem "sinatra-jsonp"
 gem 'pg'
+gem 'dm-serializer'
 #gem "yaml"
