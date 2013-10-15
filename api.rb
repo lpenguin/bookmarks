@@ -72,7 +72,7 @@ class Api
 	end
 
 	def self.get_tag(name) 
-		tag = Tag.find_by :name => name
+		tag = Tag.where :name => name
 		if tag == nil
 			tag = Tag.create :name => name
 		else
