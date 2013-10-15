@@ -8,6 +8,9 @@ require './api'
 
 puts Folder
 root = FolderHelper.get_root_folder
+puts root
+puts 'end'
+puts root.links
 #file = "test/bookmarks-2013-08-14.json"
 #importer = FirefoxImport.new
 #importer.import_file file

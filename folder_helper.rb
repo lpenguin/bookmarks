@@ -44,7 +44,8 @@ class FolderHelper
 	end
 
 	def self.get_root_folder()
-		root = Folder.where :root => true
+		root = Folder.find_by :root => true
+        puts "root is #{root}"
 		if root == nil
 			root = Folder.create(
 				:name => 'root',
