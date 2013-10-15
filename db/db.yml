@@ -1,9 +1,10 @@
 # encoding: utf-8
 
-adapter: mysql2
-database: heroku_45636db6678c38e
-host: ddc7f6a5@eu-cdbr-west-01.cleardb.com
-username: b10311a2b6a5f1
-password: ddc7f6a5
+adapter: postgresql
+database: dbb52t1htnfi9r
+host: ec2-54-247-168-170.eu-west-1.compute.amazonaws.com
+username: opjjvxsvbazkrk
+password: fMR82aaWfSffn9tiRCRLf-gdeU
 pool: 8
+port: 5432
 encoding: utf8
