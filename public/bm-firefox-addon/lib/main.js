@@ -9,8 +9,17 @@ var parser = require("./parser").Parser({
         return tabs.activeTab.title;
     }
 });
-
+var prefs = require('sdk/simple-prefs');
 var api = require("./api").api;
+var api_url = prefs.prefs['api_url'];
+
+api.setApiUrl(api_url);
+
+prefs.on("api_url", function(prefName){
+  api.setApiUrl(prefs.prefs['api_url']);
+});
+
+
 
 var panel = require("./mypanel").Panel({
   width: 500,

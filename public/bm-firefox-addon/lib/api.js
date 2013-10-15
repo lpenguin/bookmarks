@@ -54,10 +54,15 @@ function sendNode(node, callback, errorCallback){
     }, errorCallback);
 }
 
+function setApiUrl(url){
+  console.log("setting api_url: "+url);
+  api_url = url;
+}
 
 exports.api = {
   sendNode: sendNode,
   getFolders: getFolders,
-  apiCall: apiCall
+  apiCall: apiCall,
+  setApiUrl: setApiUrl
 
 };
